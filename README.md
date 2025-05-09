@@ -1,4 +1,4 @@
-Sure! Here's a quick narrative README for your chat application project:
+
 
 ---
 
