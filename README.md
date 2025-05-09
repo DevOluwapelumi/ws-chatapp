@@ -34,7 +34,7 @@ This is a real-time chat application built using **ReactJS**, **WebSocket**, and
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/chat-app.git
+   git clone https://github.com/DevOluwapelumi/ws-chatapp.git
    cd chat-app
    ```
 
