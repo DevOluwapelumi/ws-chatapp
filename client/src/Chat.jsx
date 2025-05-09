@@ -8,7 +8,7 @@ export default function Chat() {
   const [ws, setWs] = useState(null);
   const [onlinePeople, setOnlinePeople] = useState({});
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [newMessageText, setNewMessageText] = useState('');
+  const [newMessageText, setNewMessageText] = useState("");
   const [messages, setMessages] = useState([]);
   const [offlinePeople, setOfflinePeople] = useState({});
   const [showSidebar, setShowSidebar] = useState(false);
@@ -20,13 +20,13 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    axios.get('/people').then(res => {
+    axios.get("/people").then((res) => {
       const offlinePeopleArr = res.data
-        .filter(p => p._id !== id)
-        .filter(p => !Object.keys(onlinePeople).includes(p._id));
+        .filter((p) => p._id !== id)
+        .filter((p) => !Object.keys(onlinePeople).includes(p._id));
 
       const offline = {};
-      offlinePeopleArr.forEach(p => {
+      offlinePeopleArr.forEach((p) => {
         offline[p._id] = p;
       });
       setOfflinePeople(offline);
@@ -35,7 +35,7 @@ export default function Chat() {
 
   useEffect(() => {
     if (selectedUserId) {
-      axios.get('/messages/' + selectedUserId).then(res => {
+      axios.get("/messages/" + selectedUserId).then((res) => {
         setMessages(res.data);
       });
     }
@@ -43,26 +43,29 @@ export default function Chat() {
 
   useEffect(() => {
     const div = divUnderMessages.current;
-    if (div) div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    if (div) div.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages]);
 
   function connectToWs() {
-    const ws = new WebSocket('ws://localhost:4040');
+    const ws = new WebSocket("ws://localhost:4040");
     setWs(ws);
-    ws.addEventListener('message', handleMessage);
-    ws.addEventListener('close', () => {
-      console.log('Disconnected. Reconnecting...');
+    ws.addEventListener("message", handleMessage);
+    ws.addEventListener("close", () => {
+      console.log("Disconnected. Reconnecting...");
       setTimeout(connectToWs, 1000);
     });
   }
 
   function handleMessage(ev) {
     const messageData = JSON.parse(ev.data);
-    if ('online' in messageData) {
+    if ("online" in messageData) {
       showOnlinePeople(messageData.online);
-    } else if ('text' in messageData) {
-      if (messageData.sender === selectedUserId || messageData.recipient === selectedUserId) {
-        setMessages(prev => [...prev, messageData]);
+    } else if ("text" in messageData) {
+      if (
+        messageData.sender === selectedUserId ||
+        messageData.recipient === selectedUserId
+      ) {
+        setMessages((prev) => [...prev, messageData]);
       }
     }
   }
@@ -76,10 +79,10 @@ export default function Chat() {
   }
 
   // Send a message
-   function sendMessage(ev) {
+  function sendMessage(ev) {
     ev.preventDefault();
     if (!newMessageText.trim() || !selectedUserId) return;
-    
+
     const message = {
       recipient: selectedUserId,
       text: newMessageText,
@@ -90,23 +93,23 @@ export default function Chat() {
       ws.send(JSON.stringify(message));
 
       // Add the message locally immediately after sending
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev,
         {
           ...message,
           sender: id,
           _id: Date.now(), // Temporary ID for immediate UI update
           createdAt: new Date().toISOString(),
-        }
+        },
       ]);
     }
 
     // Clear the input after sending
-    setNewMessageText('');
+    setNewMessageText("");
   }
 
   function logout() {
-    axios.post('/logout').then(() => {
+    axios.post("/logout").then(() => {
       setWs(null);
       setId(null);
       setUsername(null);
@@ -143,7 +146,9 @@ export default function Chat() {
       {/* Sidebar */}
       <div
         className={`fixed md:static top-0 left-0 h-full w-64 bg-white border-r z-20 transition-transform duration-300
-        ${showSidebar ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}
+        ${
+          showSidebar ? "translate-x-0" : "-translate-x-full"
+        } md:translate-x-0`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b shadow-sm">
           <Logo />
@@ -156,7 +161,7 @@ export default function Chat() {
         </div>
 
         <div className="overflow-y-auto flex-1">
-          {allPeople.map(person => (
+          {allPeople.map((person) => (
             <div
               key={person.id}
               onClick={() => {
@@ -164,7 +169,7 @@ export default function Chat() {
                 setShowSidebar(false);
               }}
               className={`flex items-center px-4 py-3 border-b cursor-pointer hover:bg-gray-100 ${
-                selectedUserId === person.id ? 'bg-green-50' : ''
+                selectedUserId === person.id ? "bg-green-50" : ""
               }`}
             >
               <div className="w-10 h-10 rounded-full bg-green-300 text-white flex items-center justify-center font-bold mr-3">
@@ -175,7 +180,7 @@ export default function Chat() {
                   {person.username}
                 </div>
                 <div className="text-xs text-gray-500">
-                  {person.online ? 'Online' : 'Offline'}
+                  {person.online ? "Online" : "Offline"}
                 </div>
               </div>
             </div>
@@ -195,7 +200,8 @@ export default function Chat() {
             <div className="flex items-center px-4 py-3 bg-green-600 text-white shadow">
               <div className="w-8 h-8 rounded-full bg-white text-green-600 font-bold flex items-center justify-center mr-2">
                 {getAvatarLetter(
-                  onlinePeople[selectedUserId] || offlinePeople[selectedUserId]?.username
+                  onlinePeople[selectedUserId] ||
+                    offlinePeople[selectedUserId]?.username
                 )}
               </div>
               <div className="font-semibold text-sm">
@@ -210,22 +216,25 @@ export default function Chat() {
                 <div
                   key={msg._id}
                   className={`flex ${
-                    msg.sender === id ? 'justify-end' : 'justify-start'
+                    msg.sender === id ? "justify-end" : "justify-start"
                   }`}
                 >
                   <div
                     className={`rounded-xl px-4 py-2 text-sm max-w-[70%] ${
                       msg.sender === id
-                        ? 'bg-[#dcf8c6] text-gray-800'
-                        : 'bg-white text-gray-800'
+                        ? "bg-[#dcf8c6] text-gray-800"
+                        : "bg-white text-gray-800"
                     }`}
                   >
                     {msg.text}
                     <div className="text-[10px] text-right mt-1 text-gray-500">
-                      {new Date(msg.createdAt || Date.now()).toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
+                      {new Date(msg.createdAt || Date.now()).toLocaleTimeString(
+                        [],
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
                     </div>
                   </div>
                 </div>

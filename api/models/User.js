@@ -1,20 +1,13 @@
-// const mongoose = require('mongoose');
-
-// const UserSchema = new mongoose.Schema({
-//   username: {type:String, unique:true},
-//   password: String,
-// }, {timestamps: true});
-
-// const UserModel = mongoose.model('User', UserSchema);
-// module.exports = UserModel;
-
 // models/User.js
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  password: String,
-}, { timestamps: true });
+const UserSchema = new mongoose.Schema(
+  {
+    username: { type: String, unique: true },
+    password: String,
+  },
+  { timestamps: true }
+);
 
-const UserModel = mongoose.model('User', UserSchema);
+const UserModel = mongoose.model("User", UserSchema);
 export default UserModel;
