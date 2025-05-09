@@ -4,6 +4,10 @@
 
 # Real-Time Chat Application
 
+## Screenshots:
+
+![Chat App Screenshot](/client/src/assets/Screenshot.png)
+
 This is a real-time chat application built using **ReactJS**, **WebSocket**, and **Axios** for seamless messaging between users. The app supports dynamic real-time communication, allowing users to send and receive messages instantly without refreshing the page.
 
 ## Features:
@@ -35,7 +39,7 @@ This is a real-time chat application built using **ReactJS**, **WebSocket**, and
 
    ```bash
    git clone https://github.com/DevOluwapelumi/ws-chatapp.git
-   cd chat-app
+   cd ws-chatapp
    ```
 
 2. Install dependencies:
@@ -56,9 +60,6 @@ This is a real-time chat application built using **ReactJS**, **WebSocket**, and
 
 To fully function, the application requires a WebSocket server and an API server. Please set up and configure your WebSocket server at `ws://localhost:4040`. You can also adjust the URL of the API endpoints as needed.
 
-## Screenshots:
-
-![Chat App Screenshot](link-to-your-screenshot.png)
 
 ## Future Enhancements:
 
