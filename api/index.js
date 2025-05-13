@@ -8,6 +8,8 @@ import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { WebSocketServer } from "ws";
+import messageRoutes from "./routes/messages.js"; // don't forget `.js` in ES modules
+
 
 // Load environment variables
 dotenv.config();
@@ -18,9 +20,24 @@ const JWT_SECRET =
 
 const app = express();
 
+
 // Middlewares
+app.use(
+  cors({
+    origin: "http://localhost:5173", // your frontend URL
+    credentials: true,               // allow cookies and credentials
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
+
+// API routes
+app.use("/messages", messageRoutes);
+
+
+// Use your routes
+app.use("/messages", messageRoutes); // Routes now available at /messages/:id
+
 
 // Updated CORS configuration to allow requests from both origins
 app.use(
@@ -310,19 +327,6 @@ wss.on("connection", (connection, req) => {
     console.log(`WebSocket disconnected for user ${username}`);
     activeConnections.delete(userId);
   });
+  
 });
 
-// Simple model for Message (if you don't have it yet)
-// Create this file as models/Message.js
-/*
-import mongoose from 'mongoose';
-
-const MessageSchema = new mongoose.Schema({
-  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  text: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
-
-export default mongoose.model('Message', MessageSchema);
-*/

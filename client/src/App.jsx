@@ -4,10 +4,11 @@ import Routes from "./Routes";
 
 function App() {
   // Set default configuration for all axios requests
-  // axios.defaults.baseURL = "http://localhost:4040";
-  axios.defaults.baseURL = "https://ws-chatapp-backend.onrender.com/";
+  axios.defaults.baseURL = "http://localhost:4040";
+  // axios.defaults.baseURL = "wss://ws-chatapp-backend.onrender.com/";
   axios.defaults.withCredentials = true;
 
+  
   return (
     <UserContextProvider>
       <Routes />
