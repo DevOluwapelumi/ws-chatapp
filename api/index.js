@@ -43,8 +43,8 @@ app.use(
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URL || "mongodb://localhost:27017/mern-chat")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // User registration endpoint
 app.post("/register", async (req, res) => {
@@ -209,7 +209,7 @@ app.get("/messages/:userId", async (req, res) => {
 
 // Start HTTP server
 const server = app.listen(process.env.PORT || 4040, () => {
-  console.log(`HTTP server running on port ${process.env.PORT || 4040}`);
+  console.log(`🚀 HTTP server running on port ${process.env.PORT || 4040}`);
 });
 
 // WebSocket server for real-time messaging
