@@ -3,6 +3,8 @@ import axios from "axios";
 import { UserContext } from "./UserContext";
 import Logo from "./Logo";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
+import { Menu } from "@headlessui/react";
 
 export default function Chat() {
   const [ws, setWs] = useState(null);
@@ -145,19 +147,39 @@ export default function Chat() {
 
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-white border-r z-20 transition-transform duration-300
+        className={`fixed md:static top-0 left-0 h-full w-96 bg-white border-r z-20 transition-transform duration-300
         ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b shadow-sm">
           <Logo />
-          <button
-            onClick={logout}
-            className="text-xs bg-green-500 text-white px-3 py-1 rounded"
-          >
-            Logout
-          </button>
+
+          <Menu as="div" className="relative">
+            <Menu.Button className="flex items-center gap-1 text-gray-700 hover:text-green-600 focus:outline-none">
+              <FaUserCircle className="w-6 h-6" />
+            </Menu.Button>
+
+            <Menu.Items className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md py-1 border z-10">
+              <div className="px-4 py-2 text-sm text-gray-700 border-b">
+                Signed in as
+                <br />
+                <span className="font-semibold">{username}</span>
+              </div>
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    onClick={logout}
+                    className={`w-full text-left px-4 py-2 text-sm ${
+                      active ? "bg-red-300 text-red-600" : "text-gray-700"
+                    }`}
+                  >
+                    Logout
+                  </button>
+                )}
+              </Menu.Item>
+            </Menu.Items>
+          </Menu>
         </div>
 
         <div className="overflow-y-auto flex-1">

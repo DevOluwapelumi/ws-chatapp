@@ -97,10 +97,10 @@ export default function RegisterAndLoginForm() {
   }
 
   return (
-    <div className="bg-gradient-to-r from-blue-100 to-blue-300 min-h-screen flex items-center justify-center">
+    <div className="bg-gradient-to-r from-blue-100 to-blue-500 min-h-screen flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md transition-all duration-300"
+        className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-sm transition-all duration-300"
       >
         <h2 className="text-2xl font-semibold text-center mb-6 text-blue-600">
           {isLoginOrRegister === "register"
